@@ -1,0 +1,15 @@
+[package]
+name = "discordbot"
+version = "0.1.0"
+authors = ["pbzweihander <pbzweihander@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serenity = "0.5.11"
+dotenv = "0.13.0"
+
+[patch.crates-io]
+openssl = { git = "https://github.com/ishitatsuyuki/rust-openssl", branch = "0.9.x" }
+
+[features]
+use-dotenv = []
