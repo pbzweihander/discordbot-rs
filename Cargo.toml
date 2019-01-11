@@ -4,12 +4,17 @@ version = "0.1.0"
 authors = ["pbzweihander <pbzweihander@gmail.com>"]
 edition = "2018"
 
+[features]
+use-dotenv = ["dotenv"]
+
 [dependencies]
 serenity = "0.5.11"
-dotenv = "0.13.0"
+backslash-z = { path = "../backslash-z" }
+lazy_static = "1.2.0"
+futures = "0.1.25"
+tokio = "0.1.13"
+
+dotenv = { version = "0.13.0", optional = true }
 
 [patch.crates-io]
 openssl = { git = "https://github.com/ishitatsuyuki/rust-openssl", branch = "0.9.x" }
-
-[features]
-use-dotenv = []
