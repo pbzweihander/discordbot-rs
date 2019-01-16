@@ -5,6 +5,7 @@ use {
     backslash_z::*,
     futures::prelude::*,
     lazy_static::lazy_static,
+    openssl_probe,
     serenity::{builder::CreateMessage, model::channel::Message, prelude::*},
     std::{env, str::FromStr, thread},
     tokio,
@@ -97,6 +98,7 @@ impl EventHandler for Handler {
 fn main() {
     #[cfg(feature = "use-dotenv")]
     dotenv().ok();
+    openssl_probe::init_ssl_cert_env_vars();
 
     let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment variables");
 
