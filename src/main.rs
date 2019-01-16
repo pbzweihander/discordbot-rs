@@ -74,16 +74,19 @@ fn format_resp(m: CreateMessage, resp: &Response) -> CreateMessage {
 impl EventHandler for Handler {
     fn message(&self, _: Context, msg: Message) {
         if let Ok(req) = Request::from_str(&msg.content) {
-            let fut = req
-                .request(&*APP_CONFIG)
-                .map_err(|why| {
-                    eprintln!("Error while requesting: {:?}", why);
-                })
-                .map(move |resp| {
-                    if let Err(why) = msg.channel_id.send_message(|m| format_resp(m, &resp)) {
-                        eprintln!("Error while sending message: {:?}", why);
+            let fut = req.request(&*APP_CONFIG).then(move |resp| {
+                let r = match resp {
+                    Ok(resp) => msg.channel_id.send_message(|m| format_resp(m, &resp)),
+                    Err(why) => {
+                        eprintln!("Error while requesting: {:?}", why);
+                        msg.channel_id.send_message(|m| m.content("._."))
                     }
-                });
+                };
+                if let Err(why) = r {
+                    eprintln!("Error while sending message: {:?}", why);
+                }
+                Ok(())
+            });
             thread::spawn(move || {
                 tokio::run(fut);
             });
