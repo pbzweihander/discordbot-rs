@@ -56,7 +56,7 @@ fn format_resp(m: CreateMessage, resp: &Response) -> CreateMessage {
                 }))
         }),
         Response::HowTo(ref answer) => m.embed(|e| {
-            e.title(&answer.link)
+            e.title(&answer.question_title)
                 .url(&answer.link)
                 .description(format!(
                     "```\n{}\n```",
