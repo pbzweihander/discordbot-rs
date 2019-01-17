@@ -2,6 +2,7 @@
 use dotenv::dotenv;
 
 use {
+    airkorea::Grade,
     backslash_z::*,
     futures::prelude::*,
     lazy_static::lazy_static,
@@ -50,7 +51,13 @@ fn format_resp(m: CreateMessage, resp: &Response) -> CreateMessage {
                                 .map(|f| f.to_string())
                                 .unwrap_or_else(|| "--".to_string()),
                             p.unit,
-                            p.grade,
+                            match p.grade {
+                                Grade::None => "정보 없음",
+                                Grade::Good => "좋음",
+                                Grade::Normal => "보통",
+                                Grade::Bad => "나쁨",
+                                Grade::Critical => "매우 나쁨",
+                            },
                         ),
                         true,
                     )

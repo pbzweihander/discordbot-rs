@@ -325,6 +325,7 @@ dependencies = [
 name = "discordbot"
 version = "0.1.0"
 dependencies = [
+ "airkorea 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "backslash-z 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "dotenv 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.1.25 (registry+https://github.com/rust-lang/crates.io-index)",
