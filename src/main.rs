@@ -4,6 +4,7 @@ use dotenv::dotenv;
 use {
     airkorea::Grade,
     backslash_z::*,
+    daumdic::Lang,
     futures::prelude::*,
     lazy_static::lazy_static,
     openssl_probe,
@@ -30,13 +31,18 @@ fn format_resp(m: CreateMessage, resp: &Response) -> CreateMessage {
                 format!("Did you mean...\n{}", search.alternatives.join(", "))
             })
             .fields(search.words.iter().map(|w| {
+                let mut word = w.word.clone();
                 let mut body = String::new();
+                if let Lang::Other(ref lang) = w.lang {
+                    word.push_str(" ");
+                    word.push_str(lang);
+                }
                 if let Some(ref pronounce) = w.pronounce {
                     body.push_str(&pronounce);
                     body.push_str(" ");
                 }
                 body.push_str(&w.meaning.join(", "));
-                (&w.word, body, false)
+                (word, body, false)
             }))
             .footer(|f| f.text("daumdic"))
         }),

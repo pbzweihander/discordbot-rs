@@ -15,6 +15,7 @@ futures = "0.1.25"
 tokio = "0.1.14"
 openssl-probe = "0.1.2"
 airkorea = "0.3.1"
+daumdic = "0.6.1"
 
 dotenv = { version = "0.13.0", optional = true }
 
