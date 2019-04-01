@@ -1,4 +1,4 @@
-FROM clux/muslrust:1.31.0-stable
+FROM clux/muslrust:1.33.0-stable
 
 WORKDIR /
 RUN USER=root cargo new --bin discordbot

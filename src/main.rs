@@ -1,3 +1,5 @@
+#![recursion_limit = "128"]
+
 #[cfg(feature = "use-dotenv")]
 use dotenv::dotenv;
 
@@ -47,22 +49,28 @@ fn format_resp(m: CreateMessage, resp: &Response) -> CreateMessage {
             .footer(|f| f.text("daumdic"))
         }),
         Response::AirPollution(ref status) => m.embed(|e| {
-            e.description(format!("Station: {}", status.station_address))
+            e.description(format!("{}. {}", status.station_address, status.time))
                 .fields(status.pollutants.iter().map(|p| {
                     (
                         &p.name,
                         format!(
-                            "{}{} ({})",
-                            p.level
-                                .map(|f| f.to_string())
-                                .unwrap_or_else(|| "--".to_string()),
+                            "{} ({}): {}  {}",
+                            p.name,
                             p.unit,
+                            p.data
+                                .iter()
+                                .skip(p.data.len() - 5)
+                                .map(|p| p
+                                    .map(|f| f.to_string())
+                                    .unwrap_or_else(|| "--".to_string()))
+                                .collect::<Vec<_>>()
+                                .join(" → "),
                             match p.grade {
-                                Grade::None => "정보 없음",
+                                Grade::None => "정보없음",
                                 Grade::Good => "좋음",
                                 Grade::Normal => "보통",
                                 Grade::Bad => "나쁨",
-                                Grade::Critical => "매우 나쁨",
+                                Grade::Critical => "매우나쁨",
                             },
                         ),
                         true,

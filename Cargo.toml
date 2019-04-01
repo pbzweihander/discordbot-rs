@@ -8,17 +8,17 @@ edition = "2018"
 use-dotenv = ["dotenv"]
 
 [dependencies]
-backslash-z = "0.1.0"
-lazy_static = "1.2.0"
+backslash-z = "0.2.0"
+lazy_static = "1.3.0"
 futures = "0.1.25"
-tokio = "0.1.14"
+tokio = "0.1.18"
 openssl-probe = "0.1.2"
-airkorea = "0.3.1"
+airkorea = "0.4.0"
 daumdic = "0.6.1"
 
 
 [dependencies.serenity]
-version = "0.5.11"
+version = "0.5.13"
 default-features = false
 features = [ "model", "cache", "client" ]
 
