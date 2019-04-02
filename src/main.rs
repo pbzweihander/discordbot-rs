@@ -49,13 +49,12 @@ fn format_resp(m: CreateMessage, resp: &Response) -> CreateMessage {
             .footer(|f| f.text("daumdic"))
         }),
         Response::AirPollution(ref status) => m.embed(|e| {
-            e.description(format!("{}. {}", status.station_address, status.time))
+            e.description(format!("{}, {}", status.station_address, status.time))
                 .fields(status.pollutants.iter().map(|p| {
                     (
                         &p.name,
                         format!(
-                            "{} ({}): {}  {}",
-                            p.name,
+                            "({}) {}  {}",
                             p.unit,
                             p.data
                                 .iter()
